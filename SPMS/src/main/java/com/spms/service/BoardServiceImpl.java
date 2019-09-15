@@ -37,4 +37,11 @@ public class BoardServiceImpl implements BoardService {
 		log.info("register..." + board);
 		boardMapper.insertSelectKey(board);
 	}
+
+	@Override
+	public boolean modify(BoardVO board) {
+		// TODO Auto-generated method stub
+		log.info("modify...." + board);
+		return boardMapper.update(board) == 1;
+	}
 }

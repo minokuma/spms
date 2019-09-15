@@ -50,4 +50,14 @@ public class BoardController {
 			
 	}
 	
+	@PostMapping("/modify")							
+	public String modify(BoardVO board, RedirectAttributes rttr) {							
+		log.info("modify : " + board);						
+								
+		if(boardService.modify(board)) {						
+			rttr.addFlashAttribute("result","success");					
+		}						
+		return "redirect:/board/list";						
+	}							
+
 }
