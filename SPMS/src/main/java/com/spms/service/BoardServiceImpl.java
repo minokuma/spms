@@ -30,4 +30,11 @@ public class BoardServiceImpl implements BoardService {
 		log.info("get...." + bno);
 		return boardMapper.read(bno);
 	}
+
+	@Override
+	public void register(BoardVO board) {
+		// TODO Auto-generated method stub
+		log.info("register..." + board);
+		boardMapper.insertSelectKey(board);
+	}
 }
