@@ -13,7 +13,8 @@
 	<select id="read" resultType="com.spms.domain.BoardVO">
 		select *
 		from tbl_board
-		where bno = #{bno}
+		where bno =
+		#{bno}
 	</select>
 
 	<insert id="insert">
@@ -29,9 +30,10 @@
 		</selectKey>
 
 		insert into tbl_board (bno, title, content, writer)
-		values (#{bno}, #{title}, #{content}, #{writer})
+		values (#{bno},
+		#{title}, #{content}, #{writer})
 	</insert>
-	
+
 	<update id="update">
 		update tbl_board
 		set title=#{title},
@@ -40,5 +42,10 @@
 		updateDate=sysdate
 		where bno=#{bno}
 	</update>
+
+	<delete id="delete">
+		delete tbl_board
+		where bno = #{bno}
+	</delete>
 
 </mapper>		

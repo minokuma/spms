@@ -58,6 +58,19 @@ public class BoardController {
 			rttr.addFlashAttribute("result","success");					
 		}						
 		return "redirect:/board/list";						
+	}	
+	
+	@PostMapping("/remove")							
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {							
+								
+		log.info("remove..." + bno);						
+								
+		if(boardService.remove(bno)) {						
+			rttr.addFlashAttribute("result", "success");					
+		}						
+								
+		return "redirect:/board/list";						
 	}							
+
 
 }
