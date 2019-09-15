@@ -43,7 +43,8 @@ public class BoardController {
 		boardService.register(board);				
 		rttr.addFlashAttribute("result", board.getBno());				
 		return "redirect:/board/list";				
-	}			
+	}	
+	
 	@GetMapping("/register")		
 	public void register() {		
 			
