@@ -23,4 +23,11 @@ public class BoardServiceImpl implements BoardService {
 		log.info("getList......");
 		return boardMapper.getList();
 	}
+
+	@Override
+	public BoardVO get(Long bno) {
+		// TODO Auto-generated method stub
+		log.info("get...." + bno);
+		return boardMapper.read(bno);
+	}
 }
