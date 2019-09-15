@@ -203,7 +203,7 @@
 					<li><a href="morris.html">Morris.js Charts</a></li>
 				</ul> <!-- /.nav-second-level --></li>
 			<li><a href="tables.html"><i class="fa fa-table fa-fw"></i>
-					Board Register</a></li>
+					Board Modify</a></li>
 			<li><a href="forms.html"><i class="fa fa-edit fa-fw"></i>
 					Forms</a></li>
 			<li><a href="#"><i class="fa fa-wrench fa-fw"></i> UI
