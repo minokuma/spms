@@ -261,22 +261,22 @@
 							id="dataTables-example">
 							<thead>
 								<tr>
-									<th>#번호</th>
+									<!-- <th>#번호</th> -->
 									<th>제목</th>
-									<th>작성자</th>
-									<th>작성일</th>
-									<th>수정일</th>
+									<!-- <th>작성자</th> -->
+									<!-- <th>작성일</th>
+									<th>수정일</th> -->
 								</tr>
 							</thead>
 
 							<tbody>
 			                  <c:forEach items="${list }" var="board">
 			                    <tr>
-			                      <td><c:out value="${board.bno }"/></td>
-			                      <td><a href="/board/get?bno=<c:out value="${board.bno }"/>"><c:out value="${board.title }"/></a></td>
-			                      <td><c:out value="${board.writer }"/></td>
-			                      <td><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /></td>
-			                      <td><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.updateDate }" /></td>
+			                      <!-- <td></td> -->
+			                      <td><font color="Gray"><c:out value="${board.bno }"/>&nbsp;/&nbsp;<c:out value="${board.writer }"/>&nbsp;/&nbsp;<fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /></font><br/><font size="3px"><a href="/board/get?bno=<c:out value="${board.bno }"/>"><c:out value="${board.title }"/></a></font></td>
+			                      <%-- <td width="100px"><font size="3px"></font><br/><font color="gray" size="2px"><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /><br/><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.updateDate }" /></font></td> --%>
+			                   <!--    <td></td>
+			                      <td></td> -->
 			                    </tr>
 			                  </c:forEach>
 
