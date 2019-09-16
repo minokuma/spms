@@ -322,7 +322,7 @@
 				<script type="text/javascript">					
 									
 					$(document).ready(function(){				
-						var result = '<c:out value="${result}"/>';			
+						var result = '<c:out value="${result}"/>';		
 						checkModal(result);			
 									
 						history.replaceState({}, null, null);			
@@ -336,7 +336,7 @@
 								$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");	
 							}		
 									
-							$("#myModal").modal("show");		
+							//$("#myModal").modal("show");		
 									
 						}			
 									
