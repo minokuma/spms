@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spms.domain.BoardVO;
+import com.spms.domain.Criteria;
+import com.spms.domain.PageDTO;
 import com.spms.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -21,12 +23,22 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 	private BoardService boardService;
 
-	@GetMapping("/list")
-	public String list(Model model) {
-		log.info("list");
-		model.addAttribute("list", boardService.getList());
-		log.info(model);
+	/*
+	 * @GetMapping("/list") public String list(Model model) { log.info("list");
+	 * model.addAttribute("list", boardService.getList()); log.info(model);
+	 * 
+	 * return "board/list"; }
+	 */
 
+	@GetMapping("/list")
+	public String list(Criteria cri, Model model) {
+		
+		log.info("list : " + cri);
+		int total = boardService.getTotal(cri);
+		log.info("total : " + total);
+		
+		model.addAttribute("list", boardService.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		return "board/list";
 	}
 	
