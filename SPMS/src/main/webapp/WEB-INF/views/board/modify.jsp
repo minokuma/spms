@@ -257,7 +257,12 @@
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 						<div class="table-responsive">
-						<form role="form" action="/board/modify" method="post">											
+						<form role="form" action="/board/modify" method="post">	
+						
+						<!-- 추가 -->
+						<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum }"/>'>
+						<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>'>
+																
 						<div class="form-group">											
 							<label>Bno</label>										
 							<input class="form-control" name="bno" value="<c:out value="${board.bno }"/>" readonly="readonly">										
@@ -338,11 +343,18 @@
 			if(operation === 'remove'){						
 				formObj.attr("action", "/board/remove");					
 			}else if(operation === 'list'){						
-				//move to list					
-				formObj.attr("action","/board/list").attr("method","get");					
-				formObj.empty();					
-			}						
-									
+				//move to list
+				
+				formObj.attr("action","/board/list").attr("method","get");	
+                var pageNumTag = $("input[name='pageNum']").clone();
+                var amountTag = $("input[name='amount']").clone();
+                
+                formObj.empty();					
+                formObj.append(pageNumTag);
+                formObj.append(amountTag);
+                
+			}
+
 			formObj.submit();				
 		});							
 	});								

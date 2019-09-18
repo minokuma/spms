@@ -257,7 +257,13 @@
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 						<div class="table-responsive">
-						 						<!-- <form role="form" action="/board/register" method="post"> -->												
+						 						<!-- <form role="form" action="/board/register" method="post"> -->	
+						<form id='operForm' action="/board/modify" method="get">
+							<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }"/>'>
+							<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum }"/>'>
+							<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>'>
+						</form>
+																						
 						<div class="form-group">											
 							<label>Bno</label>										
 							<input class="form-control" name="bno" value="<c:out value="${board.bno }"/>" readonly="readonly">										
@@ -280,14 +286,17 @@
 							<input class="form-control" name="writer" value="<c:out value="${board.writer }"/>"  readonly="readonly">										
 						</div>											
 																	
-						<button data-oper='modify' class="btn btn-primary">											
-							<a href="/board/modify?bno=<c:out value="${board.bno }" /> " style="color: white">Modify</a>										
+						<button data-oper='modify' class="btn btn-primary">Modify					
+							<%-- <a href="/board/modify?bno=<c:out value="${board.bno }" /> " style="color: white"></a>	 --%>									
 						</button>											
-						<button data-oper='list' class="btn btn-info">											
-							<a href="/board/list" style="color: white">List</a>										
-						</button>											
+						<button data-oper='list' class="btn btn-info">List										
+							<!-- <a href="/board/list" style="color: white"></a>	 -->									
+						</button>
+															
 					<!-- </form> -->												
-
+					<form id='operForm' action="/board/modify" method="get">
+						<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno }"/>'>
+					</form>
 							 
 					</div>
 					<!-- /.table-responsive -->
@@ -312,3 +321,21 @@
 </div>
 <!-- /#wrapper -->
 <%@ include file="../includes/footer.jsp"%>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var operForm = $("#operForm");
+		
+		$("button[data-oper='modify']").on("click",function(e){
+			operForm.attr("action","/board/modify").submit();
+		});
+		
+		$("button[data-oper='list']").on("click", function(){
+			operForm.find("#bno").remove();
+			operForm.attr("action","/board/list");
+			operForm.submit();
+		});
+		
+	});
+
+</script>

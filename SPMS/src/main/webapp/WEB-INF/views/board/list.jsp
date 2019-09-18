@@ -274,7 +274,12 @@
 			                  <c:forEach items="${list }" var="board">
 			                    <tr>
 			                      <!-- <td></td> -->
-			                      <td><font color="Gray"><c:out value="${board.bno }"/>&nbsp;/&nbsp;<c:out value="${board.writer }"/>&nbsp;/&nbsp;<fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /></font><br/><font size="3px"><a href="/board/get?bno=<c:out value="${board.bno }"/>"><c:out value="${board.title }"/></a></font></td>
+			                      <td>
+			                      <font color="Gray"><c:out value="${board.bno }"/>&nbsp;/&nbsp;<c:out value="${board.writer }"/>&nbsp;/&nbsp;<fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /></font><br/><font size="3px">
+			                        <a class='move' href="<c:out value="${board.bno }"/>">
+			                           <c:out value="${board.title }"/>
+			                        </a>
+			                      </font></td>
 			                      <%-- <td width="100px"><font size="3px"></font><br/><font color="gray" size="2px"><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /><br/><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.updateDate }" /></font></td> --%>
 			                   <!--    <td></td>
 			                      <td></td> -->
@@ -382,6 +387,13 @@
 							e.preventDefault();
 							console.log('click');
 							actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+							actionForm.submit();
+						});
+						
+						$(".move").on("click",function(e){
+							e.preventDefault();
+							actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+"'>");
+							actionForm.attr("action","/board/get");
 							actionForm.submit();
 						});
 						
