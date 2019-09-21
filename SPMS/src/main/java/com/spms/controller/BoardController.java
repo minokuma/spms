@@ -63,34 +63,36 @@ public class BoardController {
 			
 	}
 	
-	@PostMapping("/modify")							
-	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {							
-		log.info("modify : " + board);						
-								
-		if(boardService.modify(board)) {						
-			rttr.addFlashAttribute("result","success");					
-		}
-		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		
-		return "redirect:/board/list";						
-	}	
+	@PostMapping("/modify")			// 게시글 수정 처리				
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {		// 입력받은 게시글 정보 VO에 담기, 페이징 처리 유지에 필요한 값 받기, 페이지 리다이렉트 시 가져갈 리다이렉트 변수 준비
+		log.info("modify : " + board);		// 롬복 로그 출력				
+		if(boardService.modify(board)) {	// 게시글 	수정 처리 호출			
+			rttr.addFlashAttribute("result","success");			// 수정처리 정상완료 시 리다이렉트 변수 값 담아놓기	
+		}	
+		/*
+		 * rttr.addAttribute("pageNum", cri.getPageNum()); // 받은 파라미터 값으로 페이지 번호 유지
+		 * rttr.addAttribute("amount", cri.getAmount()); // 받은 파라미터 값으로 페이지 번호 유지
+		 * 
+		 * // 싸이클 7 - type, keyword rttr.addAttribute("type", cri.getType()); // 검색어 타입
+		 * rttr.addAttribute("keyword", cri.getKeyword()); // 검색어 키워드
+		 */
+		// 싸이클 7
+		return "redirect:/board/list" + cri.getListLink();		// 리스트 페이지로 리다이렉트
+	}
 	
 	@PostMapping("/remove")							
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {							
-								
-		log.info("remove..." + bno);						
-								
-		if(boardService.remove(bno)) {						
-			rttr.addFlashAttribute("result", "success");					
-		}
-		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-								
-		return "redirect:/board/list";						
-	}							
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {	// 입력받은 글 번호 파라미터, 페이징 처리 유지에 필요한 값 받기, 페이지 리다이렉트 시 가져갈 리다이렉트 변수 준비						
+		log.info("remove..." + bno);		// 롬복 로그 출력				
+		if(boardService.remove(bno)) {		// 게시글 삭제 처리 호출				
+			rttr.addFlashAttribute("result", "success");		// 삭제처리 정상완료 시 리다이렉트 변수 값 담아놓기				
+		}	
+		/*
+		 * rttr.addAttribute("pageNum", cri.getPageNum()); // 받은 파라미터 값으로 페이지 번호 유지
+		 * rttr.addAttribute("amount", cri.getAmount()); // 받은 파라미터 값으로 페이지 번호 유지
+		 */
+		// 싸이클 7
+		return "redirect:/board/list" + cri.getListLink();		// 리스트 페이지로 리다이렉트
+	}						
 
 
 }
