@@ -308,38 +308,241 @@
 				</div>
 				<!-- /.panel-body -->
 			</div>
-			<!-- /.panel -->
+					<!-- 싸이클 13 - 댓글 영역 생성 -->
+		<div class="panel panel-default">
+			<!-- 싸이클  -->
+			<!-- 
+			<div class="panel-heading">
+				<i class="fa fa-comments fa-fw"></i> Reply
+			</div>
+			 -->
+			<!-- 싸이클 14 - 댓글 작성 영역 생성 -->
+			<div class="panel-heading">
+				<i class="fa fa-comments fa-fw"></i> Reply
+				<button id='addReplyBtn' class="btn btn-primary btn-xs pull-right">New
+					Reply</button>
+			</div>
+
+			<div class="panel-body">
+				<ul class="chat">
+					<li class="left clearfix" data-rno='12'>
+						<div>
+							<div class="header">
+								<strong class="primary-font">minokuma</strong> <small
+									class="pull-right text-muted">2019-09-23</small>
+							</div>
+							<p>Good Job!</p>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<!-- /.col-lg-12 -->
+		<!-- /.panel -->
 	</div>
-	<!-- /.row -->
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
 
-	<!-- /.row -->
+<!-- /.row -->
 
-	<!-- /.row -->
+<!-- /.row -->
 
-	<!-- /.row -->
+<!-- /.row -->
 </div>
 <!-- /#page-wrapper -->
-
-</div>
-<!-- /#wrapper -->
 <%@ include file="../includes/footer.jsp"%>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		var operForm = $("#operForm");
-		
-		$("button[data-oper='modify']").on("click",function(e){
-			operForm.attr("action","/board/modify").submit();
-		});
-		
-		$("button[data-oper='list']").on("click", function(){
-			operForm.find("#bno").remove();
-			operForm.attr("action","/board/list");
-			operForm.submit();
-		});
-		
-	});
 
+<!-- 싸이클 14 - 댓글 작성 모달 추가 -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>Reply</label>
+					<input class="form-control" name="reply" value="New Reply!!">
+				</div>
+				<div class="form-group">
+					<label>Replyer</label>
+					<input class="form-control" name="replyer" value="New Replier">
+				</div>
+				<div class="form-group">
+					<label>Reply Date</label>
+					<input class="form-control" name="replyDate" value="">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id='modalModBtn'  type="button" class="btn btn-warning" data-dismiss="modal">Modify</button>
+				<button id='modalRemoveBtn'  type="button" class="btn btn-danger" data-dismiss="modal">Remove</button>
+				<button id='modalRegisterBtn'  type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+				<button id='modalCloseBtn'  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- 싸이클 13 - reply.js-->
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+
+<!-- operForm 폼 컨트롤 -->
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						var operForm = $("#operForm");
+						$("button[data-oper='modify']").on(
+								"click",
+								function(e) {
+									operForm.attr("action", "/board/modify")
+											.submit();
+								});
+						$("button[data-oper='list']").on("click", function() {
+							operForm.find("#bno").remove();
+							operForm.attr("action", "/board/list");
+							operForm.submit();
+						});
+
+						/* 싸이클 13 - 댓글 리스트 영역 */
+						/* 게시글 번호(bno) 준비 */
+						var bnoValue = '<c:out value="${board.bno}"/>';
+						var replyUL = $(".chat");
+						
+						showList(1);
+
+						function showList(page) {
+							replyService
+									.getList(
+											{
+												bno : bnoValue,
+												page : page || 1
+											},
+											function(list) {
+
+												var str = "";
+												if (list == null
+														|| list.length == 0) {
+													replyUL.html("");
+													return;
+												}
+												for (var i = 0, len = list.length || 0; i < len; i++) {
+													str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
+													str += "   <div>";
+													str += "      <div class='header'>";
+													str += "         <strong class='primary-font'>"
+															+ list[i].replyer
+															+ "</strong>";
+													// str += "         <small class='pull-right text-muted'>" + list[i].replyDate + "</small>";
+													// 싸이클 13 - 날짜 포멧 사용
+													str += "         <small class='pull-right text-muted'>"
+															+ replyService
+																	.displayTime(list[i].replyDate)
+															+ "</small>";
+													str += "      </div>";
+													str += "      <p>"
+															+ list[i].reply
+															+ "</p>";
+													str += "   </div>";
+													str += "</li>";
+												}
+												replyUL.html(str);
+											});
+						} //end showList 
+						
+						
+						/* 싸이클 14 - 모달 등록창 설정  */
+						var modal = $(".modal");
+						var modalInputReply = modal.find("input[name='reply']");
+						var modalInputReplyer = modal.find("input[name='replyer']");
+						var modalInputReplyDate = modal.find("input[name='replyDate']");
+						
+						
+						var modalModBtn = $("#modalModBtn");
+						var modalRemoveBtn = $("#modalRemoveBtn");
+						var modalRegisterBtn = $("#modalRegisterBtn");
+						
+						/* 싸이클 14 - 모달 등록창 설정 후 오픈  */
+						$("#addReplyBtn").on("click",function(e){
+							modal.find("input").val("");
+							modalInputReplyDate.closest("div").hide();
+							modal.find("button[id != 'modalCloseBtn']").hide();
+							
+							modalRegisterBtn.show();
+							
+							$(".modal").modal("show");
+						});
+						
+						/* 싸이클 14 - 모달 등록창에서 댓글 등록 이벤트 */
+						modalRegisterBtn.on("click", function(e){
+							var reply = {
+									reply : modalInputReply.val(),
+									replyer : modalInputReplyer.val(),
+									bno : bnoValue
+							};
+							replyService.add(reply, function(result){
+								alert(result);
+								
+								modal.find("input").val("");
+								modal.modal("hide");
+								
+								/* 댓글 목록 갱신 */
+								showList(1);
+							});
+						});
+						
+						/* 싸이클 14 - 댓글 클릭 이벤트 처리 */
+						$(".chat").on("click", "li", function(e){
+							var rno = $(this).data("rno");
+							console.log(rno);
+						});
+						
+						/* 싸이클 15 - 댓글 조회 이벤트 처리 */
+						$(".chat").on("click", "li", function(e){
+							var rno = $(this).data("rno");
+							console.log(rno);
+							replyService.get(rno, function(reply){
+								modalInputReply.val(reply.reply);
+								modalInputReplyer.val(reply.replyer);
+								modalInputReplyDate.val(replyService.displayTime(reply.replyDate)).attr("readonly","readonly");
+								modal.data("rno", reply.rno);
+								
+								modal.find("button[id != 'modalCloseBtn']").hide();
+								modalModBtn.show();
+								modalRemoveBtn.show();
+								
+								$(".modal").modal("show");
+							});
+						});
+						
+						/* 싸이클 16 - 댓글 수정 이벤트 처리 */
+						modalModBtn.on("click", function(e){
+							var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+							
+							replyService.update(reply, function(result){
+								alert(result);
+								modal.modal("hide");
+								showList(1);
+							});
+						});
+						
+						/* 싸이클 17 - 댓글 삭제 이벤트 처리 */
+						modalRemoveBtn.on("click", function(e){
+							var rno = modal.data("rno");
+							replyService.remove(rno, function(result){
+								alert(result);
+								modal.modal("hide");
+								showList(1);
+							});
+						});
+						
+			});
 </script>

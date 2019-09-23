@@ -72,7 +72,7 @@ public class ReplyController {
 	}
 	
 	/* 싸이클 10 - 댓글 조회 처리 */
-	@GetMapping(value = "/get/{rno}", 
+	@GetMapping(value = "/{rno}", 
 			produces = {
 				MediaType.APPLICATION_XML_VALUE,
 				MediaType.APPLICATION_JSON_UTF8_VALUE
@@ -86,7 +86,7 @@ public class ReplyController {
 	}
 	
 	/* 싸이클 11 - 댓글 삭제 처리 */
-	@DeleteMapping(value = "/get/{rno}", 
+	@DeleteMapping(value = "/{rno}", 
 			produces = {
 				MediaType.TEXT_PLAIN_VALUE
 			}
