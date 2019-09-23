@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>								
 <!DOCTYPE mapper 								
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"								
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">								
 <mapper namespace="com.spms.mapper.BoardMapper">
 	<!-- com.spms.mapper.BoardMapper.java 인터페이스 매퍼 정의를 기술 -->
 	<!-- getList()에 대한 정의 기술 -->
@@ -87,10 +87,10 @@
 		   						title like '%' || #{keyword} || '%'
 		   					</when>
 		   					<when test="type == 'C'.toString()">
-		   						title like '%' || #{keyword} || '%'
+		   						content like '%' || #{keyword} || '%'
 		   					</when>
 		   					<when test="type == 'W'.toString()">
-		   						title like '%' || #{keyword} || '%'
+		   						writer like '%' || #{keyword} || '%'
 		   					</when>
 		   				</choose>
 		   			</trim>
@@ -102,39 +102,56 @@
 			where rnum > (#{pageNum} -1) * #{amount}
 		]]>
 	</select>
-	
+	<!-- getTotalCount()에 대한 정의 기술 -->
+	<!-- 싸이클 7 - 검색 처리에 따른 기능 추가 -->
 	<select id="getTotalCount" resultType="int">							
 		<![CDATA[						
 			select count(*) 
 			from tbl_board 					
-			where bno > 0					
+			where 					
+		]]>
+		   <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		   		<foreach item="type" collection="typeArr">
+		   			<trim prefix="OR">
+		   				<choose>
+		   					<when test="type == 'T'.toString()">
+		   						title like '%' || #{keyword} || '%'
+		   					</when>
+		   					<when test="type == 'C'.toString()">
+		   						content like '%' || #{keyword} || '%'
+		   					</when>
+		   					<when test="type == 'W'.toString()">
+		   						writer like '%' || #{keyword} || '%'
+		   					</when>
+		   				</choose>
+		   			</trim>
+		   		</foreach>
+		   </trim>
+		<![CDATA[   
+			     bno > 0
 		]]>
 	</select>
-	
-	<select id="read" resultType="com.spms.domain.BoardVO">
-		select *
-		from tbl_board
-		where bno =
-		#{bno}
+					
+	<!-- read() 에 대한 정의 기술 -->			
+	<select id="read" resultType="com.spms.domain.BoardVO">							
+		select *						
+		from tbl_board						
+		where bno = #{bno}						
 	</select>
-
-	<insert id="insert">
-		insert into tbl_board (bno, title, content, writer)
-		values (seq_board.nextval, #{title}, #{content}, #{writer})
+	
+	<!-- insertSelectKey() 에 대한 정의 기술 -->						
+	<insert id="insertSelectKey">		
+		<!-- selectKey 먼저 실행 -->						
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">							
+			select seq_board.nextval 						
+			from dual						
+		</selectKey>							
+									
+		insert into tbl_board (bno, title, content, writer)							
+		values (#{bno}, #{title}, #{content}, #{writer})							
 	</insert>
-
-	<insert id="insertSelectKey">
-		<selectKey keyProperty="bno" order="BEFORE"
-			resultType="long">
-			select seq_board.nextval
-			from dual
-		</selectKey>
-
-		insert into tbl_board (bno, title, content, writer)
-		values (#{bno},
-		#{title}, #{content}, #{writer})
-	</insert>
-
+	
+	<!-- update() 에 대한 정의 기술 -->
 	<update id="update">
 		update tbl_board
 		set title=#{title},
@@ -143,10 +160,12 @@
 		updateDate=sysdate
 		where bno=#{bno}
 	</update>
-
+	
+	<!-- delete() 에 대한 정의 기술 -->
 	<delete id="delete">
 		delete tbl_board
 		where bno = #{bno}
 	</delete>
-
-</mapper>		
+	
+	
+</mapper>

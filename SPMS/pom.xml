@@ -128,8 +128,9 @@
 					<groupId>com.sun.jmx</groupId>					
 					<artifactId>jmxri</artifactId>					
 				</exclusion>						
-			</exclusions>							
-			<!-- <scope>runtime</scope> -->			
+			</exclusions>		
+			<!-- Log4j 컴파일 에러 대책으로 인해 코멘트 처리 -->					
+			<!-- <scope>runtime</scope>	 -->	
 		</dependency>								
 
 		<!-- @Inject -->								
@@ -173,6 +174,26 @@
 			<version>1.18.0</version>							
 			<scope>provided</scope>		
 		</dependency>
+
+		<!-- 싸이클 8 - jackson data 처리 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+		<!-- 싸이클 8 - jackson data 처리 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+		<!-- 싸이클 8 - jackson data 처리 -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+
 	</dependencies>					
     <build>
         <plugins>
