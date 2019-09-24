@@ -59,6 +59,7 @@
 	 
 	 
 	<!-- 싸이클 7 - getListWithPaging()에 대한 정의 기술 : 동적 SQL -->
+	<!-- 싸이클 19 - 댓글 카운트 갱신 항목 추가 -->
 	<select id="getListWithPaging" resultType="com.spms.domain.BoardVO">							
 		<![CDATA[						
 			select bno,
@@ -66,7 +67,8 @@
 			       content,
 			       writer,
 			       regdate,
-			       updatedate
+			       updatedate,
+			       replycnt
 			from (
 			     select /*+ INDEX_DESC(tbl_board pk_board) */
 			            rownum rnum, 
@@ -75,10 +77,14 @@
 			            content, 
 			            writer, 
 			            regdate, 
-			            updatedate
+			            updatedate,
+			            replycnt
 			     from tbl_board
 			     where 
 		]]>
+		
+		<include refid="criteria"></include>
+		   <!-- 
 		   <trim prefix="(" suffix=") AND " prefixOverrides="OR">
 		   		<foreach item="type" collection="typeArr">
 		   			<trim prefix="OR">
@@ -96,6 +102,7 @@
 		   			</trim>
 		   		</foreach>
 		   </trim>
+		    -->
 		<![CDATA[   
 			     rownum <= #{pageNum} * #{amount}
 			     )
@@ -167,5 +174,10 @@
 		where bno = #{bno}
 	</delete>
 	
-	
+	<!-- updateReplyCnt() 에 대한 정의 기술 -->
+	<update id="updateReplyCnt">
+		update tbl_board
+		set replycnt = replycnt + #{amount}
+		where bno = #{bno}
+	</update>
 </mapper>

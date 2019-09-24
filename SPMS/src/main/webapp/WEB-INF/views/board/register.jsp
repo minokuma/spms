@@ -192,7 +192,7 @@
 							<i class="fa fa-search"></i>
 						</button>
 					</span>
-				</div> <!-- /input-group -->
+				</div> <!-- /input-group -->R
 			</li>
 			<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i>
 					Dashboard</a></li>
@@ -245,7 +245,7 @@
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Board Register</h1>
+			<h1 class="page-header">게시판 등록 페이지
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -253,7 +253,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Board Register Page</div>
+				<div class="panel-heading">게시판 등록 페이지/div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 						<div class="table-responsive">

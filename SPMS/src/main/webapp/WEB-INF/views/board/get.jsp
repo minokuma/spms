@@ -194,8 +194,7 @@
 					</span>
 				</div> <!-- /input-group -->
 			</li>
-			<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i>
-					Dashboard</a></li>
+			<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i></a></li>
 			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
 					Charts<span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
@@ -257,7 +256,7 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				
-				<div class="table-responsive">
+				<div class="table-qresponsive">
 					<!-- <form role="form" action="/board/register" method="post"> -->
 					<!-- operForm 폼 생성 -->
 					<form id='operForm' action="/board/modify" method="get">
