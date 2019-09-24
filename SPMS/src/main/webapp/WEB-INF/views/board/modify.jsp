@@ -270,18 +270,6 @@
 							<input class="form-control" name="bno" value="<c:out value="${board.bno }"/>" readonly="readonly">										
 																	
 						</div>											
-																	
-						<div class="form-group">											
-							<label>제목</label>										
-							<input class="form-control" name="title" value="<c:out value="${board.title }"/>">										
-																	
-						</div>											
-																	
-						<div class="form-group">											
-							<label>내용</label>										
-							<textarea class="form-control" rows="10"  name="content"><c:out value="${board.content }"/></textarea>
-						</div>											
-																	
 						<div class="form-group">											
 							<label>작성자</label>										
 							<input class="form-control" name="writer" value="<c:out value="${board.writer }"/>"  readonly="readonly">										
@@ -295,7 +283,18 @@
 						<div class="form-group">																	
 							<label>수정일자</label>																
 							<input class="form-control" name="updateDate" value='<fmt:formatDate pattern="yyyy/MM/dd" value="${board.updateDate }"/>'  readonly="readonly">																
-						</div>																	
+						</div>											
+						<div class="form-group">											
+							<label>제목</label>										
+							<input class="form-control" name="title" value="<c:out value="${board.title }"/>">										
+																	
+						</div>											
+																	
+						<div class="form-group">											
+							<label>내용</label>										
+							<textarea class="form-control" rows="10"  name="content"><c:out value="${board.content }"/></textarea>
+						</div>											
+																																
 												
 						<button type="submit" data-oper='modify' class="btn btn-primary">수정</a>								
 						</button>								

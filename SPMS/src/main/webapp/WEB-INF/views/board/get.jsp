@@ -273,14 +273,13 @@
 					</form>
 					
 					<div class="form-group">
-						<label>작성자</label> <input class="form-control" name="writer"
-							value="<c:out value="${board.writer }"/>" readonly="readonly">
-					</div>
-					
-					<div class="form-group">
 						<label>게시글 번호</label> <input class="form-control" name="bno"
 							value="<c:out value="${board.bno }"/>" readonly="readonly">
-
+					</div>		
+						
+					<div class="form-group">
+						<label>작성자</label> <input class="form-control" name="writer"
+							value="<c:out value="${board.writer }"/>" readonly="readonly">
 					</div>
 
 					<div class="form-group">
