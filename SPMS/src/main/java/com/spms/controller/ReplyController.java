@@ -1,7 +1,5 @@
 package com.spms.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spms.domain.Criteria;
+import com.spms.domain.ReplyPageDTO;
 import com.spms.domain.ReplyVO;
 import com.spms.service.ReplyService;
 
@@ -57,19 +56,33 @@ public class ReplyController {
 		
 	}
 	/* 싸이클 9 - 댓글 리스트 처리 */
+	/*
+	 * @GetMapping(value = "/pages/{bno}/{page}", produces = {
+	 * MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE } )
+	 * public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int
+	 * page, @PathVariable("bno") Long bno){
+	 * 
+	 * log.info("getList.............."); Criteria cri = new Criteria(page, 10);
+	 * 
+	 * return new ResponseEntity<>(replyService.getList(cri, bno), HttpStatus.OK); }
+	 */
+	
+	/* 싸이클 18 - 댓글 리스트 처리 (페이징)*/
 	@GetMapping(value = "/pages/{bno}/{page}", 
 			produces = {
 				MediaType.APPLICATION_XML_VALUE,
 				MediaType.APPLICATION_JSON_UTF8_VALUE
 			}
 	)
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno){
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno){
 		
-		log.info("getList..............");
+		log.info("get Reply List bno : " + bno);
 		Criteria cri = new Criteria(page, 10);
+		log.info("cri : " + cri);
 		
-		return new ResponseEntity<>(replyService.getList(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<>(replyService.getListPage(cri, bno), HttpStatus.OK);
 	}
+	
 	
 	/* 싸이클 10 - 댓글 조회 처리 */
 	@GetMapping(value = "/{rno}", 
@@ -80,7 +93,7 @@ public class ReplyController {
 	)
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno){
 		
-		log.info("getList.............. : " + rno);
+		log.info("get : " + rno);
 		
 		return new ResponseEntity<>(replyService.get(rno), HttpStatus.OK);
 	}

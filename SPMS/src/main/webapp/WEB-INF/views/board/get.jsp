@@ -253,62 +253,67 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">Board Register Page</div>
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-						<div class="table-responsive">
-						 						<!-- <form role="form" action="/board/register" method="post"> -->	
+			<div class="panel-heading">게시글 보기 페이지</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				
+				<div class="table-responsive">
+					<!-- <form role="form" action="/board/register" method="post"> -->
 					<!-- operForm 폼 생성 -->
-						<form id='operForm' action="/board/modify" method="get">
-									<!-- 싸이클 7 - 조회 페이지 상 검색 처리 -->
-									<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno }"/>'>
-									<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum }"/>'>
-									<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>'>
-									<input type="hidden" name="type" value='<c:out value="${cri.type }"/>'/>
-									<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>'/>
-						</form>
-																						
-						<div class="form-group">											
-							<label>Bno</label>										
-							<input class="form-control" name="bno" value="<c:out value="${board.bno }"/>" readonly="readonly">										
-																	
-						</div>											
-																	
-						<div class="form-group">											
-							<label>Title</label>										
-							<input class="form-control" name="title" value="<c:out value="${board.title }"/>" readonly="readonly">										
-																	
-						</div>											
-																	
-						<div class="form-group">											
-							<label>Text area</label>										
-							<textarea class="form-control" rows="3"  name="content" readonly="readonly"><c:out value="${board.content }"/></textarea>
-						</div>											
-																	
-						<div class="form-group">											
-							<label>Writer</label>										
-							<input class="form-control" name="writer" value="<c:out value="${board.writer }"/>"  readonly="readonly">										
-						</div>											
-																	
-						<button data-oper='modify' class="btn btn-primary">Modify					
-							<%-- <a href="/board/modify?bno=<c:out value="${board.bno }" /> " style="color: white"></a>	 --%>									
-						</button>											
-						<button data-oper='list' class="btn btn-info">List										
-							<!-- <a href="/board/list" style="color: white"></a>	 -->									
-						</button>
-															
-					<!-- </form> -->												
 					<form id='operForm' action="/board/modify" method="get">
-						<input type="hidden" id="bno" name="bno" value='<c:out value="${board.bno }"/>'>
+						<!-- 싸이클 7 - 조회 페이지 상 검색 처리 -->
+						<input type="hidden" id="bno" name="bno"
+							value='<c:out value="${board.bno }"/>'> <input
+							type="hidden" name="pageNum"
+							value='<c:out value="${cri.pageNum }"/>'> <input
+							type="hidden" name="amount"
+							value='<c:out value="${cri.amount }"/>'> <input
+							type="hidden" name="type" value='<c:out value="${cri.type }"/>' />
+						<input type="hidden" name="keyword"
+							value='<c:out value="${cri.keyword }"/>' />
 					</form>
-							 
+					
+					<div class="form-group">
+						<label>작성자</label> <input class="form-control" name="writer"
+							value="<c:out value="${board.writer }"/>" readonly="readonly">
 					</div>
-					<!-- /.table-responsive -->
+					
+					<div class="form-group">
+						<label>게시글 번호</label> <input class="form-control" name="bno"
+							value="<c:out value="${board.bno }"/>" readonly="readonly">
+
+					</div>
+
+					<div class="form-group">
+						<label>제목</label> <input class="form-control" name="title"
+							value="<c:out value="${board.title }"/>" readonly="readonly">
+
+					</div>
+
+					<div class="form-group">
+						<label>내용</label>
+						<textarea class="form-control" rows="10" name="content"
+							readonly="readonly"><c:out value="${board.content }" /></textarea>
+					</div>
+
+					<button data-oper='modify' class="btn btn-primary">수정
+					</button>
+
+					<button data-oper='list' class="btn btn-info">목록</button>
+					<!-- </form> -->
+					<!-- operForm 수정 폼 히든 파람 게시글 번호  -->
+					<form id='operForm' action="/board/modify" method="get">
+						<input type="hidden" id="bno" name="bno"
+							value='<c:out value="${board.bno }"/>'>
+					</form>
 
 				</div>
-				<!-- /.panel-body -->
+				<!-- /.table-responsive -->
+
 			</div>
-					<!-- 싸이클 13 - 댓글 영역 생성 -->
+			<!-- /.panel-body -->
+		</div>
+		<!-- 싸이클 13 - 댓글 영역 생성 -->
 		<div class="panel panel-default">
 			<!-- 싸이클  -->
 			<!-- 
@@ -319,22 +324,18 @@
 			<!-- 싸이클 14 - 댓글 작성 영역 생성 -->
 			<div class="panel-heading">
 				<i class="fa fa-comments fa-fw"></i> Reply
-				<button id='addReplyBtn' class="btn btn-primary btn-xs pull-right">New
-					Reply</button>
+				<button id='addReplyBtn' class="btn btn-primary btn-xs pull-right">댓글 작성</button>
 			</div>
 
 			<div class="panel-body">
+				<!-- 싸이클 18 -->
 				<ul class="chat">
-					<li class="left clearfix" data-rno='12'>
-						<div>
-							<div class="header">
-								<strong class="primary-font">minokuma</strong> <small
-									class="pull-right text-muted">2019-09-23</small>
-							</div>
-							<p>Good Job!</p>
-						</div>
-					</li>
 				</ul>
+			
+			</div>
+			<!-- 싸이클 18 -->
+			<!-- /.panel .chat-panel 추가 -->
+			<div class="panel-footer">
 			</div>
 		</div>
 		<!-- /.panel -->
@@ -352,7 +353,6 @@
 <!-- /#page-wrapper -->
 <%@ include file="../includes/footer.jsp"%>
 
-
 <!-- 싸이클 14 - 댓글 작성 모달 추가 -->
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -362,27 +362,27 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">REPLY MODAL</h4>
+				<h4 class="modal-title" id="myModalLabel">댓글 모달창</h4>
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-					<label>Reply</label>
+					<label>댓글 내용</label>
 					<input class="form-control" name="reply" value="New Reply!!">
 				</div>
 				<div class="form-group">
-					<label>Replyer</label>
+					<label>댓글 게시자</label>
 					<input class="form-control" name="replyer" value="New Replier">
 				</div>
 				<div class="form-group">
-					<label>Reply Date</label>
+					<label>댓글 일자</label>
 					<input class="form-control" name="replyDate" value="">
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id='modalModBtn'  type="button" class="btn btn-warning" data-dismiss="modal">Modify</button>
-				<button id='modalRemoveBtn'  type="button" class="btn btn-danger" data-dismiss="modal">Remove</button>
-				<button id='modalRegisterBtn'  type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
-				<button id='modalCloseBtn'  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id='modalModBtn'  type="button" class="btn btn-warning" data-dismiss="modal">수정</button>
+				<button id='modalRemoveBtn'  type="button" class="btn btn-danger" data-dismiss="modal">삭제</button>
+				<button id='modalRegisterBtn'  type="button" class="btn btn-primary" data-dismiss="modal">등록</button>
+				<button id='modalCloseBtn'  type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -414,38 +414,48 @@
 
 						/* 싸이클 13 - 댓글 리스트 영역 */
 						/* 게시글 번호(bno) 준비 */
+						/* 싸이클 18 - 댓글 리스트 영역 갱신(페이징)*/
 						var bnoValue = '<c:out value="${board.bno}"/>';
 						var replyUL = $(".chat");
 						
 						showList(1);
 
 						function showList(page) {
-							replyService
-									.getList(
+							replyService.getList(
 											{
 												bno : bnoValue,
 												page : page || 1
 											},
-											function(list) {
-
+											function(replyCnt , list) {
+												
+												console.log("replyCnt : " + replyCnt);
+												console.log("list : " + list);
+												console.log(list);
+												
+												if(page == -1){
+													pageNum = Math.ceil(replyCnt/10.0);
+													showList("list : " + list);
+													return;
+												}
+												
 												var str = "";
-												if (list == null
-														|| list.length == 0) {
-													replyUL.html("");
+												
+												if (list == null || list.length == 0) {
 													return;
 												}
 												for (var i = 0, len = list.length || 0; i < len; i++) {
 													str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
 													str += "   <div>";
 													str += "      <div class='header'>";
-													str += "         <strong class='primary-font'>"
+													str += "         <strong class='primary-font'>["
+															+ list[i].rno 
+															+ "] "
 															+ list[i].replyer
 															+ "</strong>";
 													// str += "         <small class='pull-right text-muted'>" + list[i].replyDate + "</small>";
 													// 싸이클 13 - 날짜 포멧 사용
 													str += "         <small class='pull-right text-muted'>"
-															+ replyService
-																	.displayTime(list[i].replyDate)
+															+ replyService.displayTime(list[i].replyDate)
 															+ "</small>";
 													str += "      </div>";
 													str += "      <p>"
@@ -454,8 +464,15 @@
 													str += "   </div>";
 													str += "</li>";
 												}
-												replyUL.html(str);
-											});
+												
+												for (var i = 0, len = list.length || 0; i < len; i++){
+													replyUL.html(str);
+													showReplyPage(replyCnt);
+												}
+											}); //end function
+											
+									
+											
 						} //end showList 
 						
 						
@@ -489,7 +506,7 @@
 									bno : bnoValue
 							};
 							replyService.add(reply, function(result){
-								alert(result);
+								// alert(result);
 								
 								modal.find("input").val("");
 								modal.modal("hide");
@@ -524,24 +541,80 @@
 						});
 						
 						/* 싸이클 16 - 댓글 수정 이벤트 처리 */
+						/* 싸이클 18 - 댓글 수정 처리 : 페이지 처리되는 댓글이 수정 시에도 현재 댓글이 포함된 페이지로 이동  */
 						modalModBtn.on("click", function(e){
-							var reply = {rno:modal.data("rno"), reply: modalInputReply.val()};
+							var reply = { 
+										  rno:modal.data("rno"), 
+										  reply: modalInputReply.val()
+										};
 							
 							replyService.update(reply, function(result){
-								alert(result);
+								//alert(result);
 								modal.modal("hide");
-								showList(1);
+								showList(pageNum);
 							});
 						});
 						
 						/* 싸이클 17 - 댓글 삭제 이벤트 처리 */
+						/* 싸이클 18 - 댓글 삭제 처리 : 페이지 처리되는 댓글이 삭제 시에도 현재 댓글이 포함된 페이지로 이동  */
 						modalRemoveBtn.on("click", function(e){
 							var rno = modal.data("rno");
 							replyService.remove(rno, function(result){
-								alert(result);
+								// alert(result);
 								modal.modal("hide");
-								showList(1);
+								showList(pageNum);
 							});
+						});
+						
+						/* 싸이클 18 - 댓글 페이지 번호 출력 */
+						var pageNum = 1;
+						var replyPageFooter = $(".panel-footer");
+						
+						function showReplyPage(replyCnt){
+							var endNum = Math.ceil(pageNum / 10.0) * 10;
+							var startNum = endNum - 9;
+							
+							var prev = startNum != 1;
+							var next = false;
+							
+							if(endNum * 10 >= replyCnt){
+								endNum = Math.ceil(replyCnt/10.0);
+							}
+							
+							if(endNum * 10 < replyCnt){
+								next = true;
+							}
+							
+							var str = "<ul class='pagination pull-right'>";
+							
+							if(prev){
+								str += "<li class='page-item'><a class='page-link' href='" + (startNum - 1) + "'>Previous</a></li>";
+							}
+							
+							for(var i = startNum; i <= endNum; i++){
+								var active = pageNum == i? "active" : "";
+								str += "<li class='page-item " + active + " '><a class='page-link' href='" + i + "'>" + i + "</a></li>";
+							}
+							
+							if(next){
+								str += "<li class='page-item'><a class='page-link' href='" + (endNum + 1) + "'>Next</a></li>";
+							}
+							str += "</ul></div>";
+							console.log(str);
+							replyPageFooter.html(str);
+						}
+						
+						/* 싸이클 18 - 마지막 처리 페이지 번호 클릭 시 새 댓글 조회 기능  */
+						replyPageFooter.on("click", "li a", function(e){
+							e.preventDefault();
+							console.log("page click");
+							
+							var targetPageNum = $(this).attr("href");
+							console.log("targetPageNum : " + targetPageNum);
+							pageNum = targetPageNum;
+							showList(pageNum);
+							
+							
 						});
 						
 			});

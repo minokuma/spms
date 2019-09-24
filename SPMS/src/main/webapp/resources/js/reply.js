@@ -8,6 +8,7 @@ var replyService = (function() {
 	
 	
 	// 싸이클 13 - AJAX 댓글 리스트 조회 처리 
+	/*
 	function getList(param, callback, error) {
 		var bno = param.bno;
 		var page = param.page || 1;
@@ -23,11 +24,30 @@ var replyService = (function() {
 			}
 		});
 	}
+	*/
+	
+	// 싸이클 18 - AJAX 댓글 리스트 조회 페이징 처리 
+	function getList(param, callback, error) {
+		var bno = param.bno;
+		var page = param.page || 1;
+
+		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
+				function(data) {
+					if (callback) {
+						// callback(data); // 댓글 목록만 가져오는 경우
+						callback(data.replyCnt, data.list); // 댓글 숫자와 목록을 가져오는 경우
+					}
+				}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
+	}
 	
 	// 싸이클 14 - AJAX 댓글 등록 처리 
 	function add(reply, callback, error) {
 		console.log("add reply......");
-		alert("등록");
+		// alert("등록");
 		$.ajax({
 			type : 'post',
 			url : '/replies/new',
