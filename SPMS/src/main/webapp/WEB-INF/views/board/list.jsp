@@ -250,45 +250,41 @@
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
-	<div class="row">
-		<div class="col-lg-11">
-			<div class="panel panel-default"><button id="regBtn" type="button" style="float: right;"  class="btn btn-primary">게시글 작성</button>
-				<div class="panel-heading">게시판 목록</div>
-				<!-- /.panel-heading -->
-				<div class="panel-body">
-					<div class="table-responsive">
-						<!-- <table class="table table-striped table-bordered table-hover"
-							id="dataTables-example"> -->
-							<table class="table table-striped table-bordered table-hover">
-							<thead>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<!-- 싸이클 3 (게시글 등록) : 게시글 등록 페이지 이동 버튼  -->
+			<button id="regBtn" type="button" style="float: right;"  class="btn btn-primary">게시글 작성</button>
+			<div class="panel-heading">게시글 목록 페이지</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>제목</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- 싸이클  1 : 게시글 리스트인 list의 변수값을 한줄씩 화면에 출력  -->
+							<c:forEach items="${list }" var="board">
 								<tr>
-									<!-- <th>#번호</th> -->
-									<th>제목</th>
-									<!-- <th>작성자</th> -->
-									<!-- <th>작성일</th>
-									<th>수정일</th> -->
+									<td><font color="Gray"><c:out value="${board.bno }" />&nbsp;/&nbsp;<c:out value="${board.writer }" />&nbsp;/&nbsp;<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate }" /></font><br />
+									<font size="3px">
+										<!-- 싸이클 2 : 해당 게시글 뷰 페이지 get 리퀘스트  -->
+										<!-- 싸이클 6 : move class 추가 -->
+				                        <a class='move' href="<c:out value="${board.bno }"/>">
+				                           <!-- 싸이클 19 - 댓글 숫자 표시 추가  -->
+				                           <c:out value="${board.title }"/> <b>[<c:out value="${board.replyCnt}" />]</b>
+				                        </a>
+									</font>
+									</td>
 								</tr>
-							</thead>
-
-							<tbody>
-			                  <c:forEach items="${list }" var="board">
-			                    <tr>
-			                      <!-- <td></td> -->
-			                      <td>
-			                      <font color="Gray"><c:out value="${board.bno }"/>&nbsp;/&nbsp;<c:out value="${board.writer }"/>&nbsp;/&nbsp;<fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /></font><br/><font size="3px">
-			                        <a class='move' href="<c:out value="${board.bno }"/>">
-			                           <c:out value="${board.title }"/>
-			                        </a>
-			                      </font></td>
-			                      <%-- <td width="100px"><font size="3px"></font><br/><font color="gray" size="2px"><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.regDate }" /><br/><fmt:formatDate pattern="yyyy-MM-dd"  value="${board.updateDate }" /></font></td> --%>
-			                   <!--    <td></td>
-			                      <td></td> -->
-			                    </tr>
-			                  </c:forEach>
-
-							</tbody>
-						</table>
-												<!-- 싸이클 7 : 검색 조건 처리 검색 폼-->
+							</c:forEach>
+						</tbody>
+					</table>
+					
+						<!-- 싸이클 7 : 검색 조건 처리 검색 폼-->
 						<div class="row">
 							<div class="col-lg-12">
 								<form id="searchForm" action="/board/list" method="get">
@@ -306,26 +302,28 @@
 									<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'>
 									<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'>
 									
-									<button class="btn btn-default">검색</button>
+									<button class="btn btn-default">Search</button>
 								</form>
 							</div>
 						</div>
+					
+						<!-- 싸이클 6 : 페이지네이션 버튼 생성  -->
 						<div class="pull-right">
 							<ul class="pagination">
-								
+								<!-- 페이지네이션 [이전] -->
 								<c:if test="${pageMaker.prev }">
 								<li class="paginate_button previous">
 									<a href="${pageMaker.startPage -1}">Previous</a>
 								</li> 
 								</c:if>
-								
+								<!-- 페이지네이션 [페이지 번호] -->
 								<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
 								
-									<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" :""} ">
+									<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' :''} ">
 										<a href="${num }">${num}</a>
 									</li>
 								</c:forEach>
-								
+								<!-- 페이지네이션 [다음] -->
 								<c:if test="${pageMaker.next }">
 									<li class="paginate_button next">	
 										<a href="${pageMaker.endPage +1 }">Next</a>
@@ -334,43 +332,27 @@
 								
 							</ul>
 						</div>
-						
-                <!-- 모달 추가 -->													
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLable" aria-hidden="true">													
-                	<div class="modal-dialog">												
-                		<div class="modal-content">											
-                			<div class="modal-header">										
-                				<h4 class="modal-title" id="myModalLabel">모달 창</h4>									
-                			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>										
-                			</div>										
-                			<div class="modal-body">처리가 완료되었습니다.</div>										
-                			<div class="modal-footer">										
-                				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>									
-                				<button type="button" class="btn btn-primary">변경사항 저장</button>									
-                			</div>										
-                		</div>											
-                	</div>												
-                </div>													
-                <!-- 모달 끝 -->													
-
-					</div>
-					<!-- /.table-responsive -->
-
+					
 				</div>
-				<!-- /.panel-body -->
+				<!-- /.table-responsive -->
+
 			</div>
-			<!-- /.panel -->
+			<!-- /.panel-body -->
 		</div>
-		<!-- /.col-lg-12 -->
+		<!-- /.panel -->
 	</div>
-
+	<!-- /.col-lg-12 -->
 </div>
+<!-- /.row -->
+
+<!-- /.row -->
+
+<!-- /.row -->
+
+<!-- /.row -->
 <!-- /#page-wrapper -->
-
-</div>
-<!-- /#wrapper -->
 <%@ include file="../includes/footer.jsp"%>
-
+				<!-- 싸이클 6(게시글 리스트 페이징 폼 선언) : 페이지 번호, 페이지 당 게시글 개수 -->
 				<!-- 싸이클 7 - 검색어 히든 파라미터 -->
 				<form id="actionForm" action="/board/list" method="get">
 									<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'>
@@ -378,49 +360,33 @@
 									<input type="hidden" name="type" value='<c:out value="${pageMaker.cri.type }"/>'/>
 									<input type="hidden" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'/>
 				</form>
+				
                 <!-- script -->									
 				<script type="text/javascript">					
-					$(document).ready(function(){				
-						var result = '<c:out value="${result}"/>';		
-						checkModal(result);			
-									
-						history.replaceState({}, null, null);			
-									
-						function checkModal(result){			
-							if (result === '' || history.state){		
-								return;	
-							}		
-									
-							if (parseInt(result) > 0){		
-								$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");	
-							}		
-									
-							//$("#myModal").modal("show");		
-									
-						}			
-									
-						
+					$(document).ready(function(){	
+						/* 싸이클 3(게시글 등록) : 게시글 등록 페이지 이동 */
 						$("#regBtn").on("click", function(){			
 							self.location = "/board/register";
 						});	
 						
+						/* 싸이클 6(게시글 리스트 페이징 폼 제어) */
 						var actionForm = $("#actionForm");
 						
+						/* 싸이클 6(게시글 리스트 페이징 버튼 클릭 시, 동작) */
 						$(".paginate_button a").on("click", function(e){
 							e.preventDefault();
 							console.log('click');
 							actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 							actionForm.submit();
 						});
-						
+						/* 싸이클 6(게시글 보기  시, 동작) */
 						$(".move").on("click",function(e){
 							e.preventDefault();
 							actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+"'>");
 							actionForm.attr("action","/board/get");
 							actionForm.submit();
 						});
-						
-					});			
+					});		
 					
 					var searchForm = $("#searchForm");
 					
@@ -439,4 +405,5 @@
 						
 						searchForm.submit();
 					});
-				</script>					
+					
+				</script>	
