@@ -203,7 +203,7 @@
 					<li><a href="morris.html">Morris.js Charts</a></li>
 				</ul> <!-- /.nav-second-level --></li>
 			<li><a href="tables.html"><i class="fa fa-table fa-fw"></i>
-					Board Register</a></li>
+					게시판 등록</a></li>
 			<li><a href="forms.html"><i class="fa fa-edit fa-fw"></i>
 					Forms</a></li>
 			<li><a href="#"><i class="fa fa-wrench fa-fw"></i> UI
@@ -258,25 +258,26 @@
 				<div class="panel-body">
 						<div class="table-responsive">
 						<form role="form" action="/board/register" method="post">
-						
-						 	 <div class="form-group">
-	                              <label>Title</label>
-	                              <input class="form-control" placeholder="Enter text" name="title">
-	                         </div>
-							 <div class="form-group">
-	                         <label>Text area</label>
-	                         <textarea class="form-control" rows="3" name="content"></textarea>
-	                         <p>
-	                         <div class="form-group">
-	                              <label>Writer</label>
+						     <div class="form-group">
+	                              <label>작성자</label>
 	                              <input class="form-control" placeholder="Enter text" name="writer">
 	                         </div>
 	                          <p>
+						 	 <div class="form-group">
+	                              <label>제목</label>
+	                              <input class="form-control" placeholder="Enter text" name="title">
+	                         </div>
+							 <div class="form-group">
+	                         <label>내용</label>
+	                         </div>
+	                         <textarea class="form-control" rows="10" name="content"></textarea>
+	                         <p>
+	                    
 	                            <!-- 
                                 <button type="button" class="btn btn-default">Default</button>
                                  -->
                                  
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">등록</button>
                                 <button type="reset" class="btn btn-success"><a href="/board/list" style="color: white">List</a></button>	
                                 
                                 <!-- 

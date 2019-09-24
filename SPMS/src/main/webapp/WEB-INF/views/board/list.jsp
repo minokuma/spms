@@ -245,15 +245,15 @@
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Tables</h1>
+			<h1 class="page-header">게시판</h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
 	<!-- /.row -->
 	<div class="row">
 		<div class="col-lg-11">
-			<div class="panel panel-default"><button id="regBtn" type="button" style="float: right;"  class="btn btn-primary">Register New Board</button>
-				<div class="panel-heading">DataTables Advanced Tables</div>
+			<div class="panel panel-default"><button id="regBtn" type="button" style="float: right;"  class="btn btn-primary">게시글 작성</button>
+				<div class="panel-heading">게시판 목록</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<div class="table-responsive">
@@ -306,7 +306,7 @@
 									<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum }"/>'>
 									<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount }"/>'>
 									
-									<button class="btn btn-default">Search</button>
+									<button class="btn btn-default">검색</button>
 								</form>
 							</div>
 						</div>
@@ -340,13 +340,13 @@
                 	<div class="modal-dialog">												
                 		<div class="modal-content">											
                 			<div class="modal-header">										
-                				<h4 class="modal-title" id="myModalLabel">Modal title</h4>									
+                				<h4 class="modal-title" id="myModalLabel">모달 창</h4>									
                 			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>										
                 			</div>										
                 			<div class="modal-body">처리가 완료되었습니다.</div>										
                 			<div class="modal-footer">										
-                				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>									
-                				<button type="button" class="btn btn-primary">Save changes</button>									
+                				<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>									
+                				<button type="button" class="btn btn-primary">변경사항 저장</button>									
                 			</div>										
                 		</div>											
                 	</div>												
