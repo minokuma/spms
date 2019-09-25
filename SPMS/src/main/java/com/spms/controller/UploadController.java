@@ -59,7 +59,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<byte[]> getFile(String fileName){
 		log.info("fileName : " + fileName);
-		File file = new File("c:\\upload\\" + fileName);
+		File file = new File("/usr/local/apache-tomcat-9.0.14/upload/" + fileName);
 		log.info("file : " + file);
 		ResponseEntity<byte[]> result = null;
 		
@@ -79,7 +79,7 @@ public class UploadController {
 
 		log.info("update ajax post.......");
 		
-		String uploadFolder = "C:\\upload";
+		String uploadFolder = "/usr/local/apache-tomcat-9.0.14/upload";
 		
 		for(MultipartFile multipartFile : uploadFile) {
 			
@@ -116,7 +116,7 @@ public class UploadController {
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		
 		List<AttachFileDTO> list = new ArrayList<>();
-		String uploadFolder = "C:\\upload";
+		String uploadFolder = "/usr/local/apache-tomcat-9.0.14/upload";
 		
 		String uploadFolderPath = getFolder();
 		
@@ -199,7 +199,7 @@ public class UploadController {
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent")String userAgent, String fileName){
 		log.info("download file : " + fileName);
-		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		Resource resource = new FileSystemResource("/usr/local/apache-tomcat-9.0.14/upload/" + fileName);
 		log.info("resource : " + resource);
 		
 		if(resource.exists() == false) {
@@ -246,7 +246,7 @@ public class UploadController {
 		File file;
 		
 		try {
-			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+			file = new File("/usr/local/apache-tomcat-9.0.14/upload/" + URLDecoder.decode(fileName, "UTF-8"));
 			file.delete();
 			
 			if("image".equals(type)) {
