@@ -1,6 +1,7 @@
 package com.spms.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -21,4 +22,5 @@ public class BoardVO {
 	private Date regDate;
 	private Date updateDate;
 	private int replyCnt; // 댓글 숫자
+	private List<BoardAttachVO> attachList; // BoardAttachVO 일괄 처리
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+<!-- 싸이클 20 - 서블릿 버전 수정 -->
+<web-app 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee https://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
@@ -39,11 +41,26 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		 
+		<!-- 싸이클 20 - 첨부파일 기능 : 윈도우 기준 C:\update\temp  -->
+		<multipart-config>
+			<location>C:\\upload\\temp</location>
+			<!-- 1MB * 20 -->
+			<max-file-size>20971520</max-file-size>
+			<!-- 40MB -->
+			<max-request-size>41943040</max-request-size>
+			<!-- 20MB -->
+			<file-size-threshold>20971520</file-size-threshold>
+		</multipart-config>
+		
 	</servlet>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	
+	
+	
+	
 </web-app>
