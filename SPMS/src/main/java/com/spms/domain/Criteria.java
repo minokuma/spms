@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
-
 /**
  * @FileName : Criteria.java
  * @Project : SPMS2
@@ -46,7 +44,7 @@ public class Criteria {
 		return type == null? new String[] {}: type.split("");
 	}
 	
-	// 싸이클 7 - 여러 개의 파라미터들을 연결해서 URL의 형태로 만들어주는 기능
+	// 싸이클 7 - 여러 개의 파라미터들을 연결해서 URL의 형태로 만들어주는 기능 (쿼리스트링의 간편화)
 	public String getListLink() {
 	
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
@@ -57,6 +55,5 @@ public class Criteria {
 		
 		return builder.toUriString();		
 	}
-	
 	
 }

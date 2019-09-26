@@ -1,6 +1,9 @@
 package com.spms.controller;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -24,8 +27,6 @@ import com.spms.service.BoardService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
-
-
 
 /**
  * @FileName : BoardController.java
@@ -109,16 +110,17 @@ public class BoardController {
 		return "redirect:/board/list" + cri.getListLink();		// 리스트 페이지로 리다이렉트
 	}
 	
+	// 싸이클 21
 	@PostMapping("/remove")							
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {	// 입력받은 글 번호 파라미터, 페이징 처리 유지에 필요한 값 받기, 페이지 리다이렉트 시 가져갈 리다이렉트 변수 준비						
-		log.info("remove..." + bno);		// 롬복 로그 출력				
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {	// 입력받은 글 번호 파라미터, 페이징 처리 유지에 필요한 값 받기, 페이지 리다이렉트 시 가져갈 리다이렉트 변수 준비						
+		log.info("remove..." + bno);		// 롬복 로그 출력
+		
+		List<BoardAttachVO> attachList = boardService.getAttachList(bno);
+		
 		if(boardService.remove(bno)) {		// 게시글 삭제 처리 호출				
+			deleteFiles(attachList);
 			rttr.addFlashAttribute("result", "success");		// 삭제처리 정상완료 시 리다이렉트 변수 값 담아놓기				
-		}	
-		/*
-		 * rttr.addAttribute("pageNum", cri.getPageNum()); // 받은 파라미터 값으로 페이지 번호 유지
-		 * rttr.addAttribute("amount", cri.getAmount()); // 받은 파라미터 값으로 페이지 번호 유지
-		 */
+		}
 		// 싸이클 7
 		return "redirect:/board/list" + cri.getListLink();		// 리스트 페이지로 리다이렉트
 	}
@@ -130,5 +132,30 @@ public class BoardController {
 	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno){
 		log.info("getAttachList : " + bno);
 		return new ResponseEntity<>(boardService.getAttachList(bno), HttpStatus.OK);
+	}
+	
+	// 싸이클 22 - 파일 삭제
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("delete attach files............");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("/usr/local/apache-tomcat-9.0.14/upload/" + attach.getUploadPath() + "/" + attach.getUuid() + "_" + attach.getFileName());
+				
+				Files.deleteIfExists(file);
+				
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("/usr/local/apache-tomcat-9.0.14/upload/" + attach.getUploadPath() + "/s_" + attach.getUuid() + "_" + attach.getFileName());
+					Files.delete(thumbNail);
+				}
+			}catch (Exception e) {
+				log.error("delete file error" + e.getMessage());
+			} // end catch
+		}); // end for each
 	}
 }

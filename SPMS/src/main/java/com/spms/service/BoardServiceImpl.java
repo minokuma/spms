@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 
 /**
  * @FileName : BoardServiceImpl.java
- * @Project : SPMS2
+ * @Project : SPMS
  * @Date : 2019. 9. 19.
  * @Author : ksky2
  * @변경이력 : 
@@ -74,17 +74,34 @@ public class BoardServiceImpl implements BoardService {
 		});
 	}
 
+	@Transactional
 	@Override
 	public boolean modify(BoardVO board) {
 		// TODO Auto-generated method stub
 		log.info("modify...." + board); // 롬복 로그 출력
-		return boardMapper.update(board) == 1; // 게시판 보드매퍼 수정 호출
+		
+		attachMapper.deleteAll(board.getBno());
+		boolean modifyResult = boardMapper.update(board) == 1;
+		
+
+		
+		if(modifyResult && board.getAttachList().size() > 0) {
+			board.getAttachList().forEach(attach -> {
+				attach.setBno(board.getBno());
+				attachMapper.insert(attach);
+			});
+		}
+		
+		return modifyResult;
 	}
 	
+	
+	@Transactional
 	@Override
 	public boolean remove(Long bno) {
 		// TODO Auto-generated method stub
 		log.info("remove...." + bno);	// 롬복 로그 출력
+		attachMapper.deleteAll(bno);
 		return boardMapper.delete(bno) == 1; // 게시판 보드매퍼 삭제 호출	
 	}
 
