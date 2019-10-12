@@ -14,7 +14,7 @@
 			<li><a href="#">
 					<div>
 						<strong>John Smith</strong> <span class="pull-right text-muted">
-							<em>Yesterday</em>
+							<em>esterday</em>
 						</span>
 					</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
