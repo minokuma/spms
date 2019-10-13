@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spms.mapper.BoardMapper">
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							CONTENT like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							WRITER like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<!-- 페이징 목록 조회 -->
+	<select id="getListWithPaging" resultType="com.spms.domain.BoardVO">
+	<![CDATA[
+		select 
+			BNO, TITLE, "CONTENT", WRITER, REGDATE, UPDATEDATE
+		from 
+		(
+			select /*+INDEX_DESC(TBL_BOARD PK_BOARD) */
+				rownum RNUM, BNO, TITLE, "CONTENT", WRITER, REGDATE, UPDATEDATE 
+			from 
+				TBL_BOARD
+      		where 
+	]]>
+		<include refid="criteria"></include>
+	<![CDATA[
+			rownum <= #{pageNum} * #{amount}
+		)
+		where RNUM > (#{pageNum} -1) * #{amount}   
+	]]>
+	</select>
+	
+	<!-- 전체 레코드 구하기 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*)
+		from TBL_BOARD
+		where 
+		<include refid="criteria"></include>
+		bno > 0
+	</select>
+	
+	<!-- 등록 (선택키 활용) -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select SEQ_BOARD.nextval 
+			from DUAL
+		</selectKey>
+		insert into TBL_BOARD (
+			BNO, TITLE, CONTENT, WRITER
+		)
+		values (
+			#{bno}, #{title}, #{content}, #{writer}
+		)
+	</insert>
+	
+	<!-- 조회 -->
+	<select id="read" resultType="com.spms.domain.BoardVO">
+		select * 
+		from TBL_BOARD 
+		where BNO = #{bno}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="update">
+		update TBL_BOARD set 
+				TITLE = #{title},
+				CONTENT = #{content},
+				WRITER = #{writer},
+				UPDATEDATE = SYSDATE
+		where BNO = #{bno}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete TBL_BOARD
+		where BNO = #{bno}
+	</delete>
+	
+</mapper>
